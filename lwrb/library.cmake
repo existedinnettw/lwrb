@@ -35,6 +35,11 @@ target_sources(lwrb PRIVATE ${lwrb_core_SRCS})
 target_include_directories(lwrb PUBLIC ${lwrb_include_DIRS})
 target_compile_options(lwrb PRIVATE ${LWRB_COMPILE_OPTIONS})
 target_compile_definitions(lwrb PRIVATE ${LWRB_COMPILE_DEFINITIONS})
+set_target_properties(
+    lwrb
+  PROPERTIES
+    PUBLIC_HEADER
+    "${CMAKE_CURRENT_LIST_DIR}/src/include/lwrb/lwrb.h;")
 
 # Register extended part
 add_library(lwrb_ex)
@@ -43,9 +48,15 @@ target_include_directories(lwrb_ex PUBLIC ${lwrb_include_DIRS})
 target_compile_options(lwrb_ex PRIVATE ${LWRB_COMPILE_OPTIONS})
 target_compile_definitions(lwrb_ex PRIVATE ${LWRB_COMPILE_DEFINITIONS} LWRB_EXTENDED)
 target_link_libraries(lwrb_ex PUBLIC lwrb)
+set_target_properties(
+    lwrb_ex
+  PROPERTIES
+    PUBLIC_HEADER
+    "${CMAKE_CURRENT_LIST_DIR}/src/include/lwrb/lwrb.h;")
 
 install(TARGETS lwrb lwrb_ex EXPORT lwrb-export)
 install(
   EXPORT lwrb-export
+  NAMESPACE lwrb::
   FILE lwrb-config.cmake
   DESTINATION lib/cmake/lwrb)
