@@ -26,6 +26,7 @@ set(lwrb_ex_SRCS
 # Setup include directories
 set(lwrb_include_DIRS
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/src/include>
+    $<INSTALL_INTERFACE:include/lwrb>
     ${LWPKT_CUSTOM_INC_DIR}
 )
 
@@ -54,7 +55,9 @@ set_target_properties(
     PUBLIC_HEADER
     "${CMAKE_CURRENT_LIST_DIR}/src/include/lwrb/lwrb.h;")
 
-install(TARGETS lwrb lwrb_ex EXPORT lwrb-export)
+install(TARGETS lwrb lwrb_ex EXPORT lwrb-export
+  PUBLIC_HEADER DESTINATION include/lwrb
+)
 install(
   EXPORT lwrb-export
   NAMESPACE lwrb::
